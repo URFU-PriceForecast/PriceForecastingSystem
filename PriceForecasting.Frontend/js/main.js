@@ -1,3 +1,3 @@
 function goToMain() {
-    window.location.href = '../html/main.html';
+    window.location.href = '../html/stat.html';
 }
