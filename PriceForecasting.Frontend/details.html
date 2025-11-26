@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Детали — PRICER.demo</title>
+  <link rel="stylesheet" href="css/details.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+</head>
+<body>
+
+  <header>
+    <button class="back-btn" onclick="window.location='index.html'">←</button>
+    <h1>Аналитика сценариев</h1>
+
+    <div class="menu-container">
+      <button class="menu-btn">☰ Сценарий</button>
+      <div class="menu-dropdown">
+        <button data-scenario="positive">Позитивный</button>
+        <button data-scenario="negative">Негативный</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="graph-section">
+      <div class="graph-placeholder">
+        <div id="chartSkeleton" class="skeleton skeleton-block"></div>
+        <canvas id="chart" style="display:none;"></canvas>
+      </div>
+
+      <div class="settings">
+        <h3>Настройки</h3>
+
+        <p>Период анализа:</p>
+
+        <ul class="period-list">
+          <li data-period="30">30 дней</li>
+          <li data-period="90">90 дней</li>
+          <li data-period="180">6 месяцев</li>
+          <li data-period="365">1 год</li>
+        </ul>
+
+        <hr>
+      </div>
+    </section>
+
+    <section class="info-section">
+      <div class="info-block">
+        <h3>Информация</h3>
+        <p id="info-text">Выберите сценарий и период для анализа данных.</p>
+      </div>
+
+      <div class="info-block">
+        <h3>Рекомендации</h3>
+        <p id="recommendations-text">После выбора сценария появятся рекомендации.</p>
+      </div>
+    </section>
+  </main>
+
+  <script src="js/chartplaceholder.js"></script>
+</body>
+</html>
