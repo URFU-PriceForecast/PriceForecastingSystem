@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Каталог товаров</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <style>
+        /* page-specific small layout tweaks */
+        .products-page { padding: 40px 16px; display:flex; justify-content:center; }
+        .products-table-wrap { width:100%; max-width:900px; }
+        .products-title { text-align:center; margin-bottom: 18px; color: var(--primary); font-size:28px; }
+    </style>
+</head>
+<body>
+    <div class="tl-buttons">
+        <a class="top-left-btn" href="index.html">Назад</a>
+    </div>
+
+    <main class="products-page">
+        <div class="products-table-wrap">
+            <h1 class="products-title">Каталог товаров</h1>
+            <div id="productsTableContainer"></div>
+        </div>
+    </main>
+
+    <script>
+        // Minimal product list - kept in sync with dtasetik.py generate_products_dataset
+        const products = [
+            { id:1, article:'482159736', name:'Смартфон iPhone 15 128GB' },
+            { id:2, article:'5938472610', name:'Смартфон iPhone 15 256GB' },
+            { id:3, article:'620184735', name:'Смартфон Samsung Galaxy S24 128GB' },
+            { id:4, article:'7493825160', name:'Смартфон Samsung Galaxy S23 256GB' },
+            { id:5, article:'815937402', name:'Смартфон Xiaomi 13 Lite 128GB' },
+            { id:6, article:'9264738151', name:'Смартфон Xiaomi Redmi Note 12 128GB' },
+            { id:7, article:'1038574926', name:'Смартфон OPPO Reno 10 256GB' },
+            { id:8, article:'284619537', name:'Ноутбук MacBook Pro 14" M3 512GB' },
+            { id:9, article:'3957281640', name:'Ноутбук MacBook Air 13" M2 256GB' },
+            { id:10, article:'462839175', name:'Ноутбук ASUS VivoBook 15 i5 512GB' },
+            { id:11, article:'5739462810', name:'Ноутбук ASUS ZenBook 13 i7 1TB' },
+            { id:12, article:'684157392', name:'Ноутбук Lenovo IdeaPad 5 i5 512GB' },
+            { id:13, article:'7952684031', name:'Ноутбук Lenovo ThinkPad T14 i7 512GB' },
+            { id:14, article:'826394715', name:'Ноутбук HP Envy 13 i5 512GB' },
+            { id:15, article:'9374851260', name:'Наушники AirPods Pro 2' },
+            { id:16, article:'148259637', name:'Наушники AirPods 3' },
+            { id:17, article:'2593671480', name:'Наушники Sony WH-1000XM5' },
+            { id:18, article:'360478259', name:'Наушники Sony LinkBuds S' },
+            { id:19, article:'4715893601', name:'Наушники Samsung Galaxy Buds2 Pro' },
+            { id:20, article:'582690471', name:'Наушники JBL Tune 770NC' },
+            { id:21, article:'6937015820', name:'Электрочайник Philips HD9359 1.7L' },
+            { id:22, article:'704812693', name:'Электрочайник Tefal KO851 1.7L' },
+            { id:23, article:'8159237041', name:'Электрочайник Bosch TWK 550' },
+            { id:24, article:'926034815', name:'Блендер Braun Multiquick 7 MQ 7045' },
+            { id:25, article:'1371459260', name:'Блендер Philips HR3556 2L' },
+            { id:26, article:'248256137', name:'Блендер Moulinex LM935 1.5L' },
+            { id:27, article:'3593672480', name:'Кофеварка DeLonghi ECAM 320' },
+            { id:28, article:'460478359', name:'Кофеварка Philips EP5400' },
+            { id:29, article:'5715894601', name:'Тостер Bosch TAT 7A1' },
+            { id:30, article:'682690571', name:'Тостер Tefal Toast & Go TT1' }
+        ];
+
+        function renderProductsTable(containerId) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+
+            const table = document.createElement('table');
+            table.className = 'products-table';
+
+            const tbody = document.createElement('tbody');
+
+            products.forEach(p => {
+                const tr = document.createElement('tr');
+                const td = document.createElement('td');
+                td.textContent = `${p.name} | ${p.article}`;
+                tr.appendChild(td);
+                tbody.appendChild(tr);
+            });
+
+            table.appendChild(tbody);
+            container.appendChild(table);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => renderProductsTable('productsTableContainer'));
+    </script>
+</body>
+</html>
