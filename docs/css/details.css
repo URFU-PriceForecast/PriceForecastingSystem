@@ -182,3 +182,98 @@ main {
     width: 100%;
   }
 }
+
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.popup-window {
+  background: #fff;
+  color: #222;
+  border-radius: 10px;
+  padding: 1.8rem;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  animation: popupAppear 0.3s ease-out;
+}
+
+.popup-window h2 {
+  margin-top: 0;
+  color: #2a2a2a;
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.popup-window p {
+  margin-bottom: 1.8rem;
+  line-height: 1.5;
+  font-size: 1rem;
+  color: #444;
+}
+
+.popup-window button {
+  background: #3d3d56; /* Цвет как у других элементов */
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.6em 1.4em;
+  font-size: 1rem;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+  display: block;
+  margin-left: auto;
+}
+
+.popup-window button:hover {
+  background: #4a4a66; /* Немного светлее при наведении */
+}
+
+.popup-window button:active {
+  transform: scale(0.98);
+}
+
+/* Анимация появления */
+@keyframes popupAppear {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .popup-window {
+    width: 85%;
+    padding: 1.5rem;
+    margin: 1rem;
+  }
+  
+  .popup-window h2 {
+    font-size: 1.2rem;
+  }
+  
+  .popup-window p {
+    font-size: 0.95rem;
+  }
+  
+  .popup-window button {
+    width: 100%;
+    margin-left: 0;
+  }
+}
