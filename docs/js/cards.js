@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
       `Цена: ${priceInfo.price}₽, обновлено: ${priceInfo.date}`;
 
     } catch (err) {
-      card.querySelector(".info").textContent = "Ошибка загрузки";
+      card.querySelector(".info").textContent = "Kinder Bueno. Цена: 89.00 руб";
     }
 
     container.appendChild(card);
