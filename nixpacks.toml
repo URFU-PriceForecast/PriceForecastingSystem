@@ -1,8 +1,0 @@
-[phases.build]
-cmds = [
-    "cd PriceForecasting.API && dotnet restore",
-    "cd PriceForecasting.API && dotnet publish -c Release -o /app/out"
-]
-
-[start]
-cmd = "cd /app/out && dotnet PriceForecasting.API.dll"
