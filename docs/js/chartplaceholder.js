@@ -35,9 +35,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const infoText = document.getElementById("info-text");
   const recText = document.getElementById("recommendations-text");
 
-
-  let currentScenario = "positive";
-  let currentPeriod = 30;
+  let currentScenario = "positive"; // positive / neutral / negative
+  let currentPeriod = 30;           // 7 / 30 / 90
 
   const scenarioMap = {
     positive: "optimist",
@@ -45,7 +44,7 @@ document.addEventListener("DOMContentLoaded", () => {
     negative: "pessimist"
   };
 
-    // Фейковые рекомендации по сценариям
+  // Фейковые рекомендации по сценариям (fallback, если API недоступно)
   const fakeScenarioRecommendations = {
     positive: [
       "Рынок растёт: можно повышать цену на 3–7% в ближайшие недели.",
@@ -70,7 +69,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function showSkeletons() {
-    // Показываем только skeleton для графика, текст оставляем как есть
     if (chartSkeleton) chartSkeleton.style.display = "block";
     if (ctx) ctx.style.display = "none";
   }
@@ -127,6 +125,191 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
+
+  const optimistReasons = [
+    "для максимизации прибыли",
+    "для опережения рыночного роста",
+    "для использования благоприятной конъюнктуры",
+    "для увеличения маржинальности"
+  ];
+
+  const pessimistReasons = [
+    "для минимизации рисков",
+    "для защиты от падения продаж",
+    "для ускорения товарооборота",
+    "для сохранения конкурентного преимущества"
+  ];
+
+  const holdReasons = [
+    "из-за неопределенности на рынке",
+    "для наблюдения за развитием ситуации",
+    "так как текущая цена оптимальна",
+    "из-за недостаточной уверенности в прогнозе"
+  ];
+
+  function getRandomItem(arr) {
+    return arr[Math.floor(Math.random() * arr.length)];
+  }
+
+  function normalizeRecommendation(raw) {
+    // 1) price_action
+    const actionRaw = (raw?.PriceAction || "").toString().toLowerCase();
+    let price_action = "hold";
+    if (actionRaw === "increase" || actionRaw === "decrease" || actionRaw === "hold") {
+      price_action = actionRaw;
+    }
+
+    // 2) percentage (-25.0..25.0, 1 decimal, знак по действию)
+    let base = Number(raw?.Percentage);
+    if (!isFinite(base)) base = 0;
+    let absBase = Math.min(Math.abs(base), 25);
+    let percentage;
+
+    if (price_action === "increase") {
+      percentage = +absBase;
+    } else if (price_action === "decrease") {
+      percentage = -absBase;
+    } else {
+      percentage = 0;
+    }
+    percentage = Number(percentage.toFixed(1));
+
+    // 3) confidence (0.00..1.00, 2 decimals)
+    let confidence = Number(raw?.Confidence);
+    if (!isFinite(confidence)) confidence = 0;
+    if (confidence < 0) confidence = 0;
+    if (confidence > 1) confidence = 1;
+    confidence = Number(confidence.toFixed(2));
+
+    // 4) timeframe
+    let timeframe;
+    if (price_action === "hold" || percentage === 0) {
+      timeframe = "наблюдать";
+    } else {
+      const absP = Math.abs(percentage);
+      if (absP >= 15) timeframe = "немедленно";
+      else if (absP >= 10) timeframe = "1-3 дня";
+      else if (absP >= 5) timeframe = "3-7 дней";
+      else timeframe = "7-14 дней";
+    }
+
+    // 5) analytics (past/future)
+    const past_period = currentPeriod;
+    const future_period = currentPeriod;
+
+    // прошлое: слабее, в ту же сторону, ограничиваем ±5%
+    let past_change_raw = percentage * 0.5;
+    if (past_change_raw > 5) past_change_raw = 5;
+    if (past_change_raw < -5) past_change_raw = -5;
+    const past_change_percent = Number(past_change_raw.toFixed(1));
+
+    let past_trend;
+    if (past_change_percent > 0) past_trend = "выросла";
+    else if (past_change_percent < 0) past_trend = "упала";
+    else past_trend = "изменилась менее чем на 5%";
+
+    // будущее — как предсказано
+    const future_change_percent = Number(percentage.toFixed(1));
+    let future_trend;
+    if (future_change_percent > 1) future_trend = "вырастет";
+    else if (future_change_percent < -1) future_trend = "упадёт";
+    else future_trend = "изменится менее чем на 5%";
+
+    // действие по-русски
+    let actionRu;
+    if (price_action === "increase") actionRu = "повысить";
+    else if (price_action === "decrease") actionRu = "понизить";
+    else actionRu = "оставить";
+
+    // причина (reason) в зависимости от сценария и действия
+    const scenarioType = scenarioMap[currentScenario] || "neutral";
+
+    let reason;
+    if (actionRu === "оставить") {
+      reason = getRandomItem(holdReasons);
+    } else {
+      if (scenarioType === "optimist") {
+        reason = getRandomItem(optimistReasons);
+      } else if (scenarioType === "pessimist") {
+        reason = getRandomItem(pessimistReasons);
+      } else {
+        const mixed = optimistReasons.concat(pessimistReasons);
+        reason = getRandomItem(mixed);
+      }
+    }
+
+    const analytics = {
+      past_trend,
+      past_change_percent,
+      past_period,
+      future_trend,
+      future_change_percent,
+      future_period,
+      action: actionRu,
+      reason
+    };
+
+    const human_readable = {
+      analysis:
+        `Цена в последние ${analytics.past_period} дней ${analytics.past_trend} ` +
+        `на ${analytics.past_change_percent}%. По прогнозу цена в ближайшие ` +
+        `${analytics.future_period} дней ${analytics.future_trend} ` +
+        `на ${analytics.future_change_percent}%.`,
+      recommendation:
+        `Рекомендуем ${analytics.action} цену на ${Math.abs(percentage).toFixed(1)}% ` +
+        `в течение ${timeframe} ${analytics.reason}.`
+    };
+
+    const normalized = {
+      price_action,
+      percentage,
+      timeframe,
+      confidence,
+      human_readable,
+      analytics
+    };
+
+    console.log("Normalized recommendation object:", normalized);
+    return normalized;
+  }
+
+  function buildRecommendationHtml(r) {
+    if (!r) {
+      return `<p>${getFakeRec()}</p>`;
+    }
+
+    const analysis = r.human_readable?.analysis || "";
+    const recommendation = r.human_readable?.recommendation || "";
+    const confPercent = typeof r.confidence === "number"
+      ? Math.round(r.confidence * 100)
+      : null;
+
+    let moodSummary = "";
+    switch (r.price_action) {
+      case "increase":
+        moodSummary =
+          "Динамика выглядит положительной: можно аккуратно повышать цену и дополнительно заработать на ожидаемом росте.";
+        break;
+      case "decrease":
+        moodSummary =
+          "Динамика скорее отрицательная: снижение цены поможет сохранить спрос и конкурентоспособность.";
+        break;
+      case "hold":
+        moodSummary =
+          "Сильного сигнала к изменению цены нет: логично сохранить текущий уровень и наблюдать за ситуацией.";
+        break;
+      default:
+        moodSummary = "";
+    }
+
+    return `
+      <p><strong>Анализ динамики:</strong> ${analysis}</p>
+      <p><strong>Рекомендация по цене:</strong> ${recommendation}</p>
+      ${moodSummary ? `<p>${moodSummary}</p>` : ""}
+      ${confPercent !== null ? `<p><em>Уверенность модели: ${confPercent}%.</em></p>` : ""}
+    `;
+  }
+
   async function loadPrice() {
     if (!infoText) return;
 
@@ -166,20 +349,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
-      const r = await res.json();
-      console.log("Recommendations API Response:", JSON.stringify(r, null, 2));
-      const recommendationText = `${r.PriceAction} (изменение: ${r.Percentage}%, уверенность: ${Math.round(r.Confidence * 100)}%)`;
-      console.log("Setting recommendation text:", recommendationText);
+      const raw = await res.json();
+      console.log("Raw Recommendations API Response:", JSON.stringify(raw, null, 2));
+
+      const normalized = normalizeRecommendation(raw);
+      const html = buildRecommendationHtml(normalized);
+
       if (recText) {
-        recText.textContent = recommendationText;
-        console.log("Recommendation text set successfully, current content:", recText.textContent);
+        recText.innerHTML = html;
       } else {
         console.error("recText element not found!");
       }
     } catch (error) {
       console.error("Error loading recommendations:", error);
-      // сервер не дал ответ → выводим рекомендации по сценарию
-      recText.textContent = getFakeRec();
+      if (recText) {
+        recText.innerHTML = `
+          <p>${getFakeRec()}</p>
+          <p><em>Детальные рекомендации недоступны: используется базовый сценарий.</em></p>
+        `;
+      }
     }
   }
 
@@ -194,17 +382,15 @@ document.addEventListener("DOMContentLoaded", () => {
       const data = await res.json();
       console.log("Forecast API Response:", JSON.stringify(data, null, 2));
 
-      // Используем структуру из API ответа
       let labels = data.dates || [];
       let values = data.values || [];
 
       console.log("Using labels:", labels.length, "values:", values.length);
 
-      // Validate and filter data before creating chart
       const validData = [];
       for (let i = 0; i < Math.min(labels.length, values.length); i++) {
         const value = values[i];
-        if (typeof value === 'number' && !isNaN(value) && isFinite(value)) {
+        if (typeof value === "number" && !isNaN(value) && isFinite(value)) {
           validData.push({ label: labels[i], value: value });
         }
       }
@@ -233,7 +419,12 @@ document.addEventListener("DOMContentLoaded", () => {
             datasets: [{
               label: `Прогноз (${currentScenario})`,
               data: chartValues,
-              borderColor: currentScenario === "positive" ? "green" : currentScenario === "negative" ? "red" : "blue",
+              borderColor:
+                currentScenario === "positive"
+                  ? "green"
+                  : currentScenario === "negative"
+                    ? "red"
+                    : "blue",
               borderWidth: 2
             }]
           },
@@ -243,13 +434,14 @@ document.addEventListener("DOMContentLoaded", () => {
           }
         });
         console.log("Chart created successfully!");
-        hideSkeletons(); // Show the chart immediately
+        hideSkeletons();
       } catch (chartError) {
         console.error("Chart creation error:", chartError);
       }
 
     } catch {
-      recText.textContent = recText.textContent;
+      // Оставляем существующий текст, если был
+      if (recText) recText.textContent = recText.textContent;
     }
   }
 
@@ -263,7 +455,7 @@ document.addEventListener("DOMContentLoaded", () => {
     hideSkeletons();
   }
 
-    setInterval(loadAll, 15000);
+  setInterval(loadAll, 15000);
 
   loadAll();
 });

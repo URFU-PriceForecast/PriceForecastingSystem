@@ -1,72 +1,100 @@
-body{
-height:100%;
-margin:0;
-font-family:Rubik,system-ui,Arial,sans-serif;
-background:#D7E6FB
+/* ========== БАЗА ========== */
+html, body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  font-family: Rubik, system-ui, Arial, sans-serif;
+  background: #D7E6FB;
+  color: #222;
 }
 
+:root {
+  --page-max-width: 1200px;
+  --page-padding-x: 1.25rem;
+  --card-radius: 12px;
+  --card-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+  --card-shadow-soft: 0 0 10px rgba(0,0,0,0.1);
+  --accent-bg: #3d3d56;
+  --accent-bg-hover: #575785;
+}
+
+/* ========== HEADER ========== */
 header {
   text-align: left;
-  padding: 2%;
+  padding: 1.5rem var(--page-padding-x) 0.5rem;
+  max-width: var(--page-max-width);
+  margin: 0 auto;
+  box-sizing: border-box;
 }
 
 header h1 {
-  font-size: 4vw;
+  font-size: clamp(1.4rem, 4vw, 2.4rem);
   font-weight: 800;
+  margin: 0 0 0.3rem 0;
 }
 
 header span {
   color: #444;
+  font-size: clamp(0.9rem, 1.2vw, 1.1rem);
 }
 
+/* ========== КОНТЕЙНЕР С КАРТОЧКАМИ ========== */
 .cards-container {
-  width: 90%;
+  width: 100%;
+  max-width: var(--page-max-width);
   margin: 0 auto;
+  padding: 0.5rem var(--page-padding-x) 4rem;
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 3%;
-  padding-bottom: 5%;
+  flex-wrap: wrap;       /* перенос по рядам */
+  gap: 1rem;             /* одинаковый отступ между карточками по обеим осям */
+  justify-content: flex-start;
+  box-sizing: border-box;
   position: relative;
 }
 
+/* ========== КАРТОЧКА ========== */
 .card {
   background: #fff;
-  border-radius: 10px;
-  width: 14%;
-  min-width: 160px;
-  padding: 1%;
+  border-radius: var(--card-radius);
+  flex: 1 1 180px;       /* базовая ширина ~180px, реагирует на экран */
+  max-width: 220px;      /* чтобы на широких экранах не расползались слишком */
+  padding: 1rem;
   text-align: center;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
-  transition: transform 0.2s ease;
+  box-shadow: var(--card-shadow-soft);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  position: relative;
+  box-sizing: border-box;
 }
 
 .card:hover {
-  transform: translateY(-3%);
+  transform: translateY(-3px); /* лёгкий подъём, но не такой большой, чтобы "заезжать" сильно */
+  box-shadow: var(--card-shadow);
 }
 
 .card h3 {
-  margin: 5% 0 2% 0;
-  font-size: 1.2vw;
+  margin: 0.6rem 0 0.3rem 0;
+  font-size: clamp(0.95rem, 1.2vw, 1.15rem);
+  font-weight: 600;
 }
 
 .card p {
-  margin: 1%;
-  font-size: 1vw;
+  margin: 0.2rem 0;
+  font-size: clamp(0.8rem, 1vw, 0.95rem);
 }
 
 .card .info {
   color: #555;
 }
 
+/* Кнопка удаления внутри карточки */
 .delete-btn {
   position: absolute;
-  top: 4%;
-  right: 4%;
+  top: 6%;
+  right: 6%;
   background: transparent;
   border: none;
   color: #999;
-  font-size: 1.2vw;
+  font-size: clamp(0.9rem, 1.2vw, 1.1rem);
   cursor: pointer;
   transition: color 0.2s;
 }
@@ -75,46 +103,54 @@ header span {
   color: #e33;
 }
 
-.card {
-  position: relative;
-}
-
+/* Кнопка действия внутри карточки */
 .btn {
-  margin-top: 5%;
+  margin-top: 0.7rem;
   width: 80%;
-  padding: 4% 0;
+  padding: 0.45rem 0;
   border: none;
   border-radius: 6px;
-  background: #3d3d56;
+  background: var(--accent-bg);
   color: #fff;
   font-weight: 600;
   cursor: pointer;
+  font-size: 0.9rem;
+  transition: background 0.2s, transform 0.1s;
 }
 
 .btn:hover {
-  background: #575785;
+  background: var(--accent-bg-hover);
+  transform: translateY(-1px);
 }
 
+/* ========== ПЛАВАЮЩАЯ КНОПКА "ДОБАВИТЬ" ========== */
 .add-btn {
   position: fixed;
   right: 3%;
   bottom: 5%;
-  width: 5%;
+  width: clamp(46px, 5vw, 64px);
   aspect-ratio: 1 / 1;
   border: none;
   border-radius: 50%;
-  background: #3d3d56;
+  background: var(--accent-bg);
   color: white;
-  font-size: 2vw;
+  font-size: clamp(1.4rem, 2vw, 2rem);
   cursor: pointer;
-  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 900;
+  transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
 }
 
 .add-btn:hover {
-  background: #575785;
+  background: var(--accent-bg-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(0,0,0,0.35);
 }
 
-/* ====== МОДАЛЬНОЕ ОКНО ====== */
+/* ========== МОДАЛЬНОЕ ОКНО ========== */
 .modal {
   display: none;
   position: fixed;
@@ -124,50 +160,137 @@ header span {
   justify-content: center;
   align-items: center;
   z-index: 1000;
+  padding: 1rem;
+  box-sizing: border-box;
 }
 
 .modal-content {
   background: #fff;
-  padding: 2%;
+  padding: 1.5rem;
   border-radius: 10px;
   width: 30%;
-  min-width: 300px;
+  min-width: 280px;
+  max-width: 420px;
   text-align: center;
-  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+  box-shadow: 0 10px 26px rgba(0,0,0,0.3);
+  box-sizing: border-box;
+}
+
+.modal-content h2 {
+  margin: 0 0 0.75rem 0;
+  font-size: 1.1rem;
 }
 
 .modal-content input {
-  width: 90%;
-  padding: 1%;
-  margin: 5% 0;
-  font-size: 1em;
+  width: 100%;
+  padding: 0.6rem 0.75rem;
+  margin: 0.8rem 0 1.2rem 0;
+  font-size: 1rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
 }
 
 .modal-actions {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
+  gap: 0.75rem;
 }
 
 .modal-actions button {
-  padding: 5% 10%;
+  flex: 1;
+  padding: 0.6rem 0.8rem;
   border: none;
   border-radius: 6px;
   cursor: pointer;
+  font-size: 0.95rem;
 }
 
 #saveCard {
-  background: #3d3d56;
+  background: var(--accent-bg);
   color: #fff;
+}
+
+#saveCard:hover {
+  background: var(--accent-bg-hover);
 }
 
 #closeModal {
   background: #ccc;
 }
 
-@media (max-width: 1000px) {
-  .card { width: 28%; }
+#closeModal:hover {
+  background: #b8b8b8;
 }
+
+/* ========== АДАПТИВ ========== */
+
+/* Планшеты и небольшие ноутбуки */
+@media (max-width: 1000px) {
+  .cards-container {
+    justify-content: center;
+  }
+
+  .card {
+    flex: 1 1 200px;
+    max-width: 260px;
+  }
+}
+
+/* Телефоны */
 @media (max-width: 600px) {
-  .card { width: 45%; }
-  .btn { font-size: 3vw; }
+  header {
+    padding: 1rem 1rem 0.5rem;
+  }
+
+  header h1 {
+    font-size: 1.4rem;
+  }
+
+  .cards-container {
+    padding: 0.5rem 1rem 4rem;
+  }
+
+  .card {
+    flex: 1 1 calc(50% - 0.75rem);
+    max-width: none;
+    padding: 0.85rem;
+  }
+
+  .btn {
+    font-size: 0.85rem;
+  }
+
+  .modal-content {
+    width: 100%;
+    max-width: 360px;
+    padding: 1.2rem;
+  }
+}
+
+/* Совсем маленькие экраны */
+@media (max-width: 420px) {
+  .card {
+    flex: 1 1 100%;
+  }
+
+  .add-btn {
+    right: 1rem;
+    bottom: 1.5rem;
+  }
+}
+
+/* Большие экраны */
+@media (min-width: 1440px) {
+  body {
+    font-size: 17px;
+  }
+
+  header h1 {
+    font-size: 2.2rem;
+  }
+
+  .card {
+    padding: 1.1rem;
+  }
 }
