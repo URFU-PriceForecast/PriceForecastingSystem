@@ -1,0 +1,35 @@
+# PRICER Platform - Development Docker Compose Override
+
+services:
+  # Override for development
+  pricer-api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - DOTNET_USE_POLLING_FILE_WATCHER=true
+    volumes:
+      - ./PriceForecastingSystem/PriceForecasting.API/PriceForecasting.API:/app
+      - ./PriceForecastingSystem/PriceForecasting.Core:/app/Core
+      - ./PriceForecastingSystem/PriceForecasting.Data:/app/Data
+      - ./PriceForecastingSystem/ml_final:/app/ml_final
+    command: ["dotnet", "watch", "run", "--urls", "http://+:5229"]
+
+  pricer-db:
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=DevP@ssw0rd123!
+      - MSSQL_PID=Developer
+
+  pricer-ml:
+    volumes:
+      - ./ml_final:/app
+    environment:
+      - FLASK_ENV=development
+      - FLASK_DEBUG=true
+
+  # Disable monitoring in development
+  pricer-monitoring:
+    profiles: ["monitoring"]
+
+  pricer-grafana:
+    profiles: ["monitoring"]
+

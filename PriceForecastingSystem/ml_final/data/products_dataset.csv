@@ -1,0 +1,31 @@
+id,article,name,category_id,brand,image_url,description
+1,482159736,Смартфон iPhone 15 128GB,2,Apple,/images/product_1.jpg,Описание товара Смартфон iPhone 15 128GB
+2,5938472610,Смартфон iPhone 15 256GB,2,Apple,/images/product_2.jpg,Описание товара Смартфон iPhone 15 256GB
+3,620184735,Смартфон Samsung Galaxy S24 128GB,2,Samsung,/images/product_3.jpg,Описание товара Смартфон Samsung Galaxy S24 128GB
+4,7493825160,Смартфон Samsung Galaxy S23 256GB,2,Samsung,/images/product_4.jpg,Описание товара Смартфон Samsung Galaxy S23 256GB
+5,815937402,Смартфон Xiaomi 13 Lite 128GB,2,Xiaomi,/images/product_5.jpg,Описание товара Смартфон Xiaomi 13 Lite 128GB
+6,9264738151,Смартфон Xiaomi Redmi Note 12 128GB,2,Xiaomi,/images/product_6.jpg,Описание товара Смартфон Xiaomi Redmi Note 12 128GB
+7,1038574926,Смартфон OPPO Reno 10 256GB,2,OPPO,/images/product_7.jpg,Описание товара Смартфон OPPO Reno 10 256GB
+8,284619537,"Ноутбук MacBook Pro 14"" M3 512GB",3,Apple,/images/product_8.jpg,"Описание товара Ноутбук MacBook Pro 14"" M3 512GB"
+9,3957281640,"Ноутбук MacBook Air 13"" M2 256GB",3,Apple,/images/product_9.jpg,"Описание товара Ноутбук MacBook Air 13"" M2 256GB"
+10,462839175,Ноутбук ASUS VivoBook 15 i5 512GB,3,ASUS,/images/product_10.jpg,Описание товара Ноутбук ASUS VivoBook 15 i5 512GB
+11,5739462810,Ноутбук ASUS ZenBook 13 i7 1TB,3,ASUS,/images/product_11.jpg,Описание товара Ноутбук ASUS ZenBook 13 i7 1TB
+12,684157392,Ноутбук Lenovo IdeaPad 5 i5 512GB,3,Lenovo,/images/product_12.jpg,Описание товара Ноутбук Lenovo IdeaPad 5 i5 512GB
+13,7952684031,Ноутбук Lenovo ThinkPad T14 i7 512GB,3,Lenovo,/images/product_13.jpg,Описание товара Ноутбук Lenovo ThinkPad T14 i7 512GB
+14,826394715,Ноутбук HP Envy 13 i5 512GB,3,HP,/images/product_14.jpg,Описание товара Ноутбук HP Envy 13 i5 512GB
+15,9374851260,Наушники AirPods Pro 2,4,Apple,/images/product_15.jpg,Описание товара Наушники AirPods Pro 2
+16,148259637,Наушники AirPods 3,4,Apple,/images/product_16.jpg,Описание товара Наушники AirPods 3
+17,2593671480,Наушники Sony WH-1000XM5,4,Sony,/images/product_17.jpg,Описание товара Наушники Sony WH-1000XM5
+18,360478259,Наушники Sony LinkBuds S,4,Sony,/images/product_18.jpg,Описание товара Наушники Sony LinkBuds S
+19,4715893601,Наушники Samsung Galaxy Buds2 Pro,4,Samsung,/images/product_19.jpg,Описание товара Наушники Samsung Galaxy Buds2 Pro
+20,582690471,Наушники JBL Tune 770NC,4,JBL,/images/product_20.jpg,Описание товара Наушники JBL Tune 770NC
+21,6937015820,Электрочайник Philips HD9359 1.7L,6,Philips,/images/product_21.jpg,Описание товара Электрочайник Philips HD9359 1.7L
+22,704812693,Электрочайник Tefal KO851 1.7L,6,Tefal,/images/product_22.jpg,Описание товара Электрочайник Tefal KO851 1.7L
+23,8159237041,Электрочайник Bosch TWK 550,6,Bosch,/images/product_23.jpg,Описание товара Электрочайник Bosch TWK 550
+24,926034815,Блендер Braun Multiquick 7 MQ 7045,6,Braun,/images/product_24.jpg,Описание товара Блендер Braun Multiquick 7 MQ 7045
+25,1371459260,Блендер Philips HR3556 2L,6,Philips,/images/product_25.jpg,Описание товара Блендер Philips HR3556 2L
+26,248256137,Блендер Moulinex LM935 1.5L,6,Moulinex,/images/product_26.jpg,Описание товара Блендер Moulinex LM935 1.5L
+27,3593672480,Кофеварка DeLonghi ECAM 320,6,DeLonghi,/images/product_27.jpg,Описание товара Кофеварка DeLonghi ECAM 320
+28,460478359,Кофеварка Philips EP5400,6,Philips,/images/product_28.jpg,Описание товара Кофеварка Philips EP5400
+29,5715894601,Тостер Bosch TAT 7A1,6,Bosch,/images/product_29.jpg,Описание товара Тостер Bosch TAT 7A1
+30,682690571,Тостер Tefal Toast & Go TT1,6,Tefal,/images/product_30.jpg,Описание товара Тостер Tefal Toast & Go TT1

@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PRICER Platform - Data-driven ценообразование</title>
+  <link rel="stylesheet" href="css/styless.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Rubik:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+  <header class="main-header">
+    <div class="header-content">
+      <div class="logo">
+        <h1>PRICER<span>.platform</span></h1>
+        <div class="badge">demo</div>
+      </div>
+      <nav class="main-nav">
+        <a href="#dashboard" class="nav-link active"><i class="fas fa-chart-line"></i> Дашборд</a>
+        <a href="#analytics" class="nav-link"><i class="fas fa-chart-bar"></i> Аналитика</a>
+        <a href="#settings" class="nav-link"><i class="fas fa-cog"></i> Настройки</a>
+      </nav>
+      <div class="header-actions">
+        <div class="auth-buttons" id="authButtons">
+          <button class="btn-outline" id="loginBtn">
+            <i class="fas fa-sign-in-alt"></i> Войти
+          </button>
+          <button class="btn-primary" id="registerBtn">
+            <i class="fas fa-user-plus"></i> Регистрация
+          </button>
+        </div>
+        <div class="user-info" id="userInfo" style="display: none;">
+          <span id="userEmail"></span>
+          <button class="btn-outline" id="logoutBtn">
+            <i class="fas fa-sign-out-alt"></i> Выйти
+          </button>
+        </div>
+        <button class="btn-secondary" id="refreshBtn">
+          <i class="fas fa-sync-alt"></i> Обновить
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <!-- Статистика -->
+    <section class="stats-section">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon">
+            <i class="fas fa-shopping-cart"></i>
+          </div>
+          <div class="stat-content">
+            <h3 id="totalProducts">0</h3>
+            <p>Товаров отслеживается</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">
+            <i class="fas fa-chart-line"></i>
+          </div>
+          <div class="stat-content">
+            <h3 id="activeAlerts">0</h3>
+            <p>Активных рекомендаций</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">
+            <i class="fas fa-percentage"></i>
+          </div>
+          <div class="stat-content">
+            <h3 id="avgAccuracy">85%</h3>
+            <p>Средняя точность прогнозов</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">
+            <i class="fas fa-coins"></i>
+          </div>
+          <div class="stat-content">
+            <h3 id="potentialSavings">+25%</h3>
+            <p>Потенциальный рост прибыли</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Товары -->
+    <section class="products-section">
+      <div class="section-header">
+        <h2><i class="fas fa-boxes"></i> Отслеживаемые товары</h2>
+        <button class="btn-primary" id="addBtn">
+          <i class="fas fa-plus"></i> Добавить товар
+        </button>
+      </div>
+
+      <div class="cards-container" id="cardsContainer">
+        <!-- Карточки товаров будут добавлены динамически -->
+      </div>
+    </section>
+
+    <!-- Быстрый анализ рынка -->
+    <section class="market-insights">
+      <div class="section-header">
+        <h2><i class="fas fa-lightbulb"></i> Рыночные инсайты</h2>
+      </div>
+      <div class="insights-grid">
+        <div class="insight-card">
+          <h4>📈 Тренд рынка</h4>
+          <p>Цены на электронику растут на 2.3% в месяц</p>
+          <small>На основе анализа 50+ товаров</small>
+        </div>
+        <div class="insight-card">
+          <h4>🎯 Рекомендация</h4>
+          <p>Увеличьте цены на iPhone на 3-5% до конца квартала</p>
+          <small>Уверенность: 87%</small>
+        </div>
+        <div class="insight-card">
+          <h4>⚠️ Риски</h4>
+          <p>Высокая волатильность на рынке наушников</p>
+          <small>Мониторьте конкурентов</small>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Модальное окно добавления товара -->
+  <div class="modal" id="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3><i class="fas fa-plus-circle"></i> Добавить товар для отслеживания</h3>
+        <button class="modal-close" id="closeModal">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="articleInput">
+            <i class="fas fa-hashtag"></i> Артикул товара
+          </label>
+          <input type="text" id="articleInput" placeholder="Например: 482159736" />
+          <small>Введите артикул товара с Wildberries, Ozon или другого маркетплейса</small>
+        </div>
+
+        <div class="form-group">
+          <label>
+            <i class="fas fa-tags"></i> Категория
+          </label>
+          <div class="category-selector">
+            <button class="category-btn active" data-category="all">Все</button>
+            <button class="category-btn" data-category="electronics">Электроника</button>
+            <button class="category-btn" data-category="fashion">Одежда</button>
+            <button class="category-btn" data-category="home">Дом</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn-secondary" id="cancelBtn">Отмена</button>
+        <button class="btn-primary" id="saveCard">
+          <i class="fas fa-plus"></i> Добавить товар
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Модальное окно входа -->
+  <div class="modal" id="loginModal">
+    <div class="modal-content auth-modal">
+      <div class="modal-header">
+        <h3><i class="fas fa-sign-in-alt"></i> Вход в систему</h3>
+        <button class="modal-close" id="closeLoginModal">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <form id="loginForm">
+          <div class="form-group">
+            <label for="loginEmail">
+              <i class="fas fa-envelope"></i> Email
+            </label>
+            <input type="email" id="loginEmail" placeholder="your@email.com" required />
+          </div>
+
+          <div class="form-group">
+            <label for="loginPassword">
+              <i class="fas fa-lock"></i> Пароль
+            </label>
+            <input type="password" id="loginPassword" placeholder="Введите пароль" required />
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn-primary btn-full">
+              <i class="fas fa-sign-in-alt"></i> Войти
+            </button>
+          </div>
+        </form>
+
+        <div class="auth-switch">
+          <p>Нет аккаунта? <a href="#" id="switchToRegister">Зарегистрироваться</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Модальное окно регистрации -->
+  <div class="modal" id="registerModal">
+    <div class="modal-content auth-modal">
+      <div class="modal-header">
+        <h3><i class="fas fa-user-plus"></i> Регистрация</h3>
+        <button class="modal-close" id="closeRegisterModal">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <form id="registerForm">
+          <div class="form-group">
+            <label for="registerEmail">
+              <i class="fas fa-envelope"></i> Email
+            </label>
+            <input type="email" id="registerEmail" placeholder="your@email.com" required />
+          </div>
+
+          <div class="form-group">
+            <label for="registerPassword">
+              <i class="fas fa-lock"></i> Пароль
+            </label>
+            <input type="password" id="registerPassword" placeholder="Минимум 6 символов" minlength="6" required />
+          </div>
+
+          <div class="form-group">
+            <label for="registerConfirmPassword">
+              <i class="fas fa-lock"></i> Подтвердите пароль
+            </label>
+            <input type="password" id="registerConfirmPassword" placeholder="Повторите пароль" minlength="6" required />
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn-primary btn-full">
+              <i class="fas fa-user-plus"></i> Зарегистрироваться
+            </button>
+          </div>
+        </form>
+
+        <div class="auth-switch">
+          <p>Уже есть аккаунт? <a href="#" id="switchToLogin">Войти</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Уведомления -->
+  <div class="notifications" id="notifications">
+    <!-- Уведомления будут добавлены динамически -->
+  </div>
+
+  <script src="js/cards.js"></script>
+  <script src="js/dashboard.js"></script>
+  <script src="js/auth.js"></script>
+</body>
+</html>

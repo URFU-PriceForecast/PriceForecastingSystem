@@ -1,0 +1,16 @@
+C:\Users\Пользователь\source\repos\PriceForecastingSystem\PriceForecastingSystem\PriceForecasting.Data\bin\Debug\net9.0\appsettings.json
+C:\Users\Пользователь\source\repos\PriceForecastingSystem\PriceForecastingSystem\PriceForecasting.Data\bin\Debug\net9.0\PriceForecasting.Data.deps.json
+C:\Users\Пользователь\source\repos\PriceForecastingSystem\PriceForecastingSystem\PriceForecasting.Data\bin\Debug\net9.0\PriceForecasting.Data.runtimeconfig.json
+C:\Users\Пользователь\source\repos\PriceForecastingSystem\PriceForecastingSystem\PriceForecasting.Data\bin\Debug\net9.0\PriceForecasting.Data.dll
+C:\Users\Пользователь\source\repos\PriceForecastingSystem\PriceForecastingSystem\PriceForecasting.Data\bin\Debug\net9.0\PriceForecasting.Data.pdb
+C:\Users\Пользователь\source\repos\PriceForecastingSystem\PriceForecastingSystem\PriceForecasting.Data\obj\Debug\net9.0\PriceForecasting.Data.csproj.AssemblyReference.cache
+C:\Users\Пользователь\source\repos\PriceForecastingSystem\PriceForecastingSystem\PriceForecasting.Data\obj\Debug\net9.0\PriceForecasting.Data.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Пользователь\source\repos\PriceForecastingSystem\PriceForecastingSystem\PriceForecasting.Data\obj\Debug\net9.0\PriceForecasting.Data.AssemblyInfoInputs.cache
+C:\Users\Пользователь\source\repos\PriceForecastingSystem\PriceForecastingSystem\PriceForecasting.Data\obj\Debug\net9.0\PriceForecasting.Data.AssemblyInfo.cs
+C:\Users\Пользователь\source\repos\PriceForecastingSystem\PriceForecastingSystem\PriceForecasting.Data\obj\Debug\net9.0\PriceForecasting.Data.csproj.CoreCompileInputs.cache
+C:\Users\Пользователь\source\repos\PriceForecastingSystem\PriceForecastingSystem\PriceForecasting.Data\obj\Debug\net9.0\PriceForecasting.Data.sourcelink.json
+C:\Users\Пользователь\source\repos\PriceForecastingSystem\PriceForecastingSystem\PriceForecasting.Data\obj\Debug\net9.0\PriceForecasting.Data.dll
+C:\Users\Пользователь\source\repos\PriceForecastingSystem\PriceForecastingSystem\PriceForecasting.Data\obj\Debug\net9.0\refint\PriceForecasting.Data.dll
+C:\Users\Пользователь\source\repos\PriceForecastingSystem\PriceForecastingSystem\PriceForecasting.Data\obj\Debug\net9.0\PriceForecasting.Data.pdb
+C:\Users\Пользователь\source\repos\PriceForecastingSystem\PriceForecastingSystem\PriceForecasting.Data\obj\Debug\net9.0\PriceForecasting.Data.genruntimeconfig.cache
+C:\Users\Пользователь\source\repos\PriceForecastingSystem\PriceForecastingSystem\PriceForecasting.Data\obj\Debug\net9.0\ref\PriceForecasting.Data.dll

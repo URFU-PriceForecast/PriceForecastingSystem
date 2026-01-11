@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PriceForecastingSystem - Быстрый старт</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .step {
+            background: #f8f9fa;
+            border-left: 4px solid #007bff;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+        .step h3 {
+            margin-top: 0;
+            color: #007bff;
+        }
+        .code {
+            background: #f4f4f4;
+            padding: 10px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+        }
+        .warning {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 15px 0;
+        }
+        .success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 15px 0;
+        }
+        .links {
+            text-align: center;
+            margin-top: 30px;
+        }
+        .links a {
+            display: inline-block;
+            margin: 10px;
+            padding: 12px 24px;
+            background: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        .links a:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 PriceForecastingSystem</h1>
+        <p style="text-align: center; font-size: 18px; color: #666;">
+            Система прогнозирования цен на основе машинного обучения
+        </p>
+
+        <div class="step">
+            <h3>✅ Шаг 1: Запустите API сервер</h3>
+            <p>Откройте командную строку в корневой папке проекта и выполните:</p>
+            <div class="code">.\run-server-manual.bat</div>
+            <p>Или для разработчиков:</p>
+            <div class="code">.\start-server.bat</div>
+        </div>
+
+        <div class="step">
+            <h3>🌐 Шаг 2: Откройте веб-интерфейс</h3>
+            <p><strong>Способ 1: Локальный сервер (рекомендуется)</strong></p>
+            <div class="code">.\serve-docs.bat</div>
+            <p>Затем перейдите: <a href="http://localhost:8000" target="_blank">http://localhost:8000</a></p>
+
+            <p><strong>Способ 2: Прямое открытие файла (работает с исправленными путями)</strong></p>
+            <div class="code">docs\index.html</div>
+            <p>Откройте файл напрямую в браузере</p>
+        </div>
+
+        <div class="success">
+            <strong>✅ Система готова:</strong> Все пути исправлены, API сервер должен быть запущен!<br>
+            <strong>💡 Если ничего не работает:</strong> Очистите кеш браузера (Ctrl+F5) или откройте в режиме инкогнито
+        </div>
+
+        <div class="step">
+            <h3>🧪 Шаг 3: Протестируйте систему</h3>
+            <p>Используйте тестовые артикулы товаров:</p>
+            <ul>
+                <li><code>482159736</code> - iPhone 15 128GB</li>
+                <li><code>5938472610</code> - iPhone 15 256GB</li>
+                <li><code>620184735</code> - Samsung Galaxy S24</li>
+            </ul>
+        </div>
+
+        <div class="step">
+            <h3>🛠️ Дополнительные инструменты</h3>
+            <p><strong>Swagger UI для тестирования API:</strong></p>
+            <div class="code">http://localhost:5229/swagger</div>
+
+            <p><strong>Остановка сервера:</strong></p>
+            <div class="code">.\stop-server.bat</div>
+
+            <p><strong>Тестирование всех функций:</strong></p>
+            <div class="code">.\test-server.bat</div>
+        </div>
+
+        <div class="success">
+            <strong>🎯 Готово!</strong> Ваша система прогнозирования цен готова к работе.
+            Используйте ML рекомендации для принятия решений о ценообразовании.
+        </div>
+
+        <div class="links">
+            <a href="index.html">🚀 Открыть приложение</a>
+            <a href="http://localhost:5229/swagger" target="_blank">📊 Swagger API</a>
+            <a href="../QUICKSTART.md" target="_blank">📖 Подробная документация</a>
+        </div>
+    </div>
+</body>
+</html>

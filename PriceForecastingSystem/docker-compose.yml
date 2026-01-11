@@ -1,0 +1,142 @@
+# PRICER Platform - Production Docker Compose
+
+services:
+  # Main API Service
+  pricer-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: pricer-api
+    ports:
+      - "5229:5229"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:5229
+      - ConnectionStrings__DefaultConnection=Server=pricer-db;Database=PriceForecastingDb;User Id=sa;Password=StrongP@ssw0rd123!;TrustServerCertificate=True;
+      - MlService__Url=http://pricer-ml:5000
+    depends_on:
+      - pricer-db
+    networks:
+      - pricer-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5229/api/products"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Database Service
+  pricer-db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: pricer-db
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=StrongP@ssw0rd123!
+      - MSSQL_PID=Express
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserver_data:/var/opt/mssql
+      - ./db/init:/docker-entrypoint-initdb.d
+    networks:
+      - pricer-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P StrongP@ssw0rd123! -Q 'SELECT 1'"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+
+  # ML Service (Python)
+  pricer-ml:
+    build:
+      context: ./ml_final
+      dockerfile: ../Dockerfile.ml
+    container_name: pricer-ml
+    ports:
+      - "5000:5000"
+    environment:
+      - FLASK_ENV=production
+      - FLASK_APP=ml_service.py
+    networks:
+      - pricer-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # Frontend Service (Nginx)
+  pricer-frontend:
+    build:
+      context: ./PriceForecasting.Frontend
+      dockerfile: ../Dockerfile.frontend
+    container_name: pricer-frontend
+    ports:
+      - "8080:80"
+    depends_on:
+      - pricer-api
+    networks:
+      - pricer-network
+    restart: unless-stopped
+
+  # Redis for caching (optional)
+  pricer-redis:
+    image: redis:7-alpine
+    container_name: pricer-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - pricer-network
+    restart: unless-stopped
+    command: redis-server --appendonly yes
+
+  # Monitoring (Prometheus + Grafana stack - optional)
+  pricer-monitoring:
+    image: prom/prometheus:latest
+    container_name: pricer-monitoring
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    networks:
+      - pricer-network
+    restart: unless-stopped
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+
+  # Grafana for dashboards
+  pricer-grafana:
+    image: grafana/grafana:latest
+    container_name: pricer-grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin123
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./monitoring/grafana/provisioning:/etc/grafana/provisioning
+    networks:
+      - pricer-network
+    restart: unless-stopped
+
+volumes:
+  sqlserver_data:
+  redis_data:
+  prometheus_data:
+  grafana_data:
+
+networks:
+  pricer-network:
+    driver: bridge
+
