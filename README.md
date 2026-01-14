@@ -6,7 +6,7 @@
 
 **Интеллектуальная платформа прогнозирования цен для e-commerce**
 
-## 🚀 Быстрый старт
+ Быстрый старт
 
 ### Самый простой способ
 # Клонировать репозиторий
@@ -15,22 +15,6 @@ cd PriceForecastingSystem
 
 # Запустить систему
 .\run-server-manual.bat
-
-
-
-Frontend (HTML/JS) ◄──► API (.NET Core) ◄──► ML (Python)
-       │                    │                    │
-   Dashboard           REST API          5 ML моделей
-   Charts              Auth              EDA анализ
-   Real-time           Caching           Confidence
-       │                    │                    │
-       └────────────────────┼────────────────────┘
-                            ▼
-                      Database (SQL Server)
-                      • Products
-                      • Price History  
-                      • Users
-
 
 
 
