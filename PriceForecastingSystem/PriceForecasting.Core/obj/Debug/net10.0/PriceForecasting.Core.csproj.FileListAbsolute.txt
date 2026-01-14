@@ -1,0 +1,13 @@
+C:\Users\Пользователь\source\repos\PriceForecastingSystem\PriceForecastingSystem\PriceForecasting.Core\bin\Debug\net10.0\PriceForecasting.Core.deps.json
+C:\Users\Пользователь\source\repos\PriceForecastingSystem\PriceForecastingSystem\PriceForecasting.Core\bin\Debug\net10.0\PriceForecasting.Core.dll
+C:\Users\Пользователь\source\repos\PriceForecastingSystem\PriceForecastingSystem\PriceForecasting.Core\bin\Debug\net10.0\PriceForecasting.Core.pdb
+C:\Users\Пользователь\source\repos\PriceForecastingSystem\PriceForecastingSystem\PriceForecasting.Core\obj\Debug\net10.0\PriceForecasting.Core.csproj.AssemblyReference.cache
+C:\Users\Пользователь\source\repos\PriceForecastingSystem\PriceForecastingSystem\PriceForecasting.Core\obj\Debug\net10.0\PriceForecasting.Core.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Пользователь\source\repos\PriceForecastingSystem\PriceForecastingSystem\PriceForecasting.Core\obj\Debug\net10.0\PriceForecasting.Core.AssemblyInfoInputs.cache
+C:\Users\Пользователь\source\repos\PriceForecastingSystem\PriceForecastingSystem\PriceForecasting.Core\obj\Debug\net10.0\PriceForecasting.Core.AssemblyInfo.cs
+C:\Users\Пользователь\source\repos\PriceForecastingSystem\PriceForecastingSystem\PriceForecasting.Core\obj\Debug\net10.0\PriceForecasting.Core.csproj.CoreCompileInputs.cache
+C:\Users\Пользователь\source\repos\PriceForecastingSystem\PriceForecastingSystem\PriceForecasting.Core\obj\Debug\net10.0\PriceForecasting.Core.sourcelink.json
+C:\Users\Пользователь\source\repos\PriceForecastingSystem\PriceForecastingSystem\PriceForecasting.Core\obj\Debug\net10.0\PriceForecasting.Core.dll
+C:\Users\Пользователь\source\repos\PriceForecastingSystem\PriceForecastingSystem\PriceForecasting.Core\obj\Debug\net10.0\refint\PriceForecasting.Core.dll
+C:\Users\Пользователь\source\repos\PriceForecastingSystem\PriceForecastingSystem\PriceForecasting.Core\obj\Debug\net10.0\PriceForecasting.Core.pdb
+C:\Users\Пользователь\source\repos\PriceForecastingSystem\PriceForecastingSystem\PriceForecasting.Core\obj\Debug\net10.0\ref\PriceForecasting.Core.dll

@@ -1,6 +1,5 @@
-﻿// Controllers/RecommendationsController.cs
+// Controllers/RecommendationsController.cs
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using PriceForecasting.Data.Context;
 using PriceForecasting.Data.Models;
@@ -22,8 +21,55 @@ public class RecommendationsController : ControllerBase
         _mlService = mlService;
     }
 
+    [HttpGet("demo/{article}")]
+    public async Task<IActionResult> GetRecommendationDemo(
+        string article,
+        [FromQuery] int period = 30,
+        [FromQuery] string scenario = "optimist")
+    {
+        // Найти товар по артикулу
+        var product = await _db.products
+            .FirstOrDefaultAsync(p => p.article == article);
+
+        if (product == null)
+        {
+            return NotFound(new { message = "Товар не найден" });
+        }
+
+        // Получить историю цен за последние period дней
+        var startDate = DateTime.Now.AddDays(-period);
+        var priceHistory = await _db.price_history
+            .Where(ph => ph.product_id == product.id && ph.created_at >= startDate)
+            .OrderBy(ph => ph.created_at)
+            .ToListAsync();
+
+        if (!priceHistory.Any())
+        {
+            return Ok(new RecommendationDto
+            {
+                PriceAction = "hold",
+                Percentage = 0,
+                Timeframe = "Недостаточно данных",
+                Confidence = 0.3m,
+                Reasoning = "Недостаточно исторических данных для анализа",
+                Scenario = scenario
+            });
+        }
+
+        // Подготовить данные для ML сервиса
+        var request = new RecommendationRequestDto
+        {
+            Article = article,
+            Period = period,
+            Scenario = scenario
+        };
+
+        var recommendation = await _mlService.GetRecommendationAsync(request);
+
+        return Ok(recommendation);
+    }
+
     [HttpGet("{article}")]
-    [Authorize]
     public async Task<IActionResult> GetRecommendation(
         string article,
         [FromQuery] int period = 30,

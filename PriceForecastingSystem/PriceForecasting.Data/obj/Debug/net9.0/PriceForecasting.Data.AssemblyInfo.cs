@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PriceForecasting.Data")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3335c9cdfd1d063b91a40b3e5008c160cd99108f")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a5e09d6c47bcee9a20fe265ff5c6aa27cdd463c7")]
 [assembly: System.Reflection.AssemblyProductAttribute("PriceForecasting.Data")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PriceForecasting.Data")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

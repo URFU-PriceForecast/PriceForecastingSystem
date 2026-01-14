@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PRICER</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <script src="../js/main.js" defer></script>
+</head>
+<body>
+    <div class="reg-buttons">
+        <button class="top-left-btn" id="testButton">Вход/Регистрация</button>
+    </div>
+
+    <header>
+        <div class="content">
+            <h1>PRICER.demo</h1>
+        </div>
+    </header>
+
+    <main>
+        <div class="content">
+            <div class="input-container">
+                <a class="test-button" href="db.html">Каталог товаров</a>
+                <input type="number" placeholder="Введите артикул" class="number-input">
+            </div>
+        </div>
+    </main>
+
+    <div id="siteModal" class="signup_in" aria-hidden="true" role="dialog" aria-labelledby="siteModalTitle">
+        <div class="signup_in_backdrop" data-modal-close></div>
+        <div class="signup_in_dialog" role="document">
+            <header class="signup_in_header">
+                <h2 id="siteModalTitle">Вход / Регистрация</h2>
+                <button class="signup_in_close" aria-label="Закрыть">&times;</button>
+            </header>
+            <div class="signup_in_body">
+                <p>Здесь будет форма регистрации. Пока что это заглушка.</p>
+                <form class="signup_in_form" action="#" onsubmit="return false;">
+                    <input type="email" name="email" placeholder="Email" class="number-input">
+                    <input type="password" name="password" placeholder="Пароль" class="number-input" style="margin-top:10px;">
+                    <div style="margin-top:12px; display:flex; gap:8px;">
+                        <button class="test-button" type="submit">Зарегистрироваться</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

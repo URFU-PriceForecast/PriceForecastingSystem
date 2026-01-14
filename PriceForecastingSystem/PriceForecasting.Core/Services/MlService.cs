@@ -30,7 +30,7 @@ public class MlService : IMlService
             var result = await response.Content.ReadFromJsonAsync<MlServiceResponse>();
             return result ?? throw new Exception("Failed to deserialize ML response");
         }
-        catch (Exception ex)
+        catch
         {
             // Fallback: return mock data if ML service is unavailable
             return GenerateMockResponse(request);

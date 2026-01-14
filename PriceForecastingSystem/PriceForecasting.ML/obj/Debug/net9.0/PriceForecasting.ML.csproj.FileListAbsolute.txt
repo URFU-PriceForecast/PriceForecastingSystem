@@ -1,0 +1,12 @@
+C:\Users\Пользователь\source\repos\PriceForecastingSystem\PriceForecastingSystem\PriceForecasting.ML\bin\Debug\net9.0\PriceForecasting.ML.deps.json
+C:\Users\Пользователь\source\repos\PriceForecastingSystem\PriceForecastingSystem\PriceForecasting.ML\bin\Debug\net9.0\PriceForecasting.ML.dll
+C:\Users\Пользователь\source\repos\PriceForecastingSystem\PriceForecastingSystem\PriceForecasting.ML\bin\Debug\net9.0\PriceForecasting.ML.pdb
+C:\Users\Пользователь\source\repos\PriceForecastingSystem\PriceForecastingSystem\PriceForecasting.ML\obj\Debug\net9.0\PriceForecasting.ML.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Пользователь\source\repos\PriceForecastingSystem\PriceForecastingSystem\PriceForecasting.ML\obj\Debug\net9.0\PriceForecasting.ML.AssemblyInfoInputs.cache
+C:\Users\Пользователь\source\repos\PriceForecastingSystem\PriceForecastingSystem\PriceForecasting.ML\obj\Debug\net9.0\PriceForecasting.ML.AssemblyInfo.cs
+C:\Users\Пользователь\source\repos\PriceForecastingSystem\PriceForecastingSystem\PriceForecasting.ML\obj\Debug\net9.0\PriceForecasting.ML.csproj.CoreCompileInputs.cache
+C:\Users\Пользователь\source\repos\PriceForecastingSystem\PriceForecastingSystem\PriceForecasting.ML\obj\Debug\net9.0\PriceForecasting.ML.sourcelink.json
+C:\Users\Пользователь\source\repos\PriceForecastingSystem\PriceForecastingSystem\PriceForecasting.ML\obj\Debug\net9.0\PriceForecasting.ML.dll
+C:\Users\Пользователь\source\repos\PriceForecastingSystem\PriceForecastingSystem\PriceForecasting.ML\obj\Debug\net9.0\refint\PriceForecasting.ML.dll
+C:\Users\Пользователь\source\repos\PriceForecastingSystem\PriceForecastingSystem\PriceForecasting.ML\obj\Debug\net9.0\PriceForecasting.ML.pdb
+C:\Users\Пользователь\source\repos\PriceForecastingSystem\PriceForecastingSystem\PriceForecasting.ML\obj\Debug\net9.0\ref\PriceForecasting.ML.dll

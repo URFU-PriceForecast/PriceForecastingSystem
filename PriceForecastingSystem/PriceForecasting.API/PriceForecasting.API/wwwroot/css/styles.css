@@ -1,0 +1,278 @@
+body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    background: linear-gradient(180deg, #8FB8FF 0%, #C9D5EA 100%);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary: #2A2D41; /* цвет кнопки "Каталог товаров" */
+    --btn-radius: 6px; /* радиус скругления кнопок и полей */
+}
+
+.content {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 16px;
+    box-sizing: border-box;
+}
+
+header .content {
+    padding-top: calc(100vh / 3 - 40px);
+    text-align: center;
+}
+
+h1 {
+    font-size: 80px;
+    margin: 0;
+    color: #2A2D41;
+}
+
+main {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.input-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 20px;
+    width: 100%;
+    max-width: 1200px;
+    box-sizing: border-box;
+    justify-content: center;
+}
+
+.test-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 12px;
+    font-size: 14px;
+    background-color: var(--primary);
+    color: #fff;
+    text-decoration: none;
+    border: none;
+    border-radius: var(--btn-radius);
+    cursor: pointer;
+    flex: 0 0 auto;
+}
+
+.number-input {
+    border: 1px solid #ccc;
+    border-radius: var(--btn-radius);
+    padding: 12px 16px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: var(--btn-radius);
+    outline: none;
+}
+
+/* Make all native buttons use the small top-left appearance by default */
+button, a.button, .test-button, .top-left-btn {
+    font-family: inherit;
+    line-height: 1;
+}
+
+/* In-modal action button should match input width/height */
+.signup_in_form .signup-action {
+    width: 100%;
+    padding: 12px 16px;
+    font-size: 16px;
+    border-radius: var(--btn-radius);
+}
+
+/* panels for login/signup inside the same form — stacked and animated */
+.signup_in_form{position:relative;min-height:140px}
+.signup_in_form .panel{position:absolute;left:0;top:0;width:100%;transition:opacity 220ms ease, transform 220ms ease}
+.signup_in_form .panel.hidden{opacity:0;transform:translateY(8px);pointer-events:none}
+.signup_in_form .panel:not(.hidden){opacity:1;transform:none;pointer-events:auto}
+
+/* site notice (small popup on page load) */
+.site-notice{
+    position:fixed;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    z-index:2100;
+    pointer-events:none;
+}
+
+.site-notice__box{
+    background:#fff;
+    padding:20px 24px;
+    border-radius:8px;
+    box-shadow:0 12px 40px rgba(20,30,60,0.12);
+    min-width:220px;
+    max-width:90vw;
+    position:relative;
+    opacity:0;
+    transform:scale(.98) translateY(8px);
+    transition:opacity 200ms ease, transform 200ms ease;
+    pointer-events:auto;
+}
+.site-notice.show .site-notice__box{opacity:1;transform:scale(1) translateY(0)}
+.site-notice.hidden .site-notice__box{opacity:0;transform:scale(.98) translateY(8px)}
+.site-notice-close{background:transparent;border:none;font-size:18px;cursor:pointer;color:#666;padding:6px;position:absolute;right:12px;top:10px}
+.site-notice-close{background:transparent;border:none;font-size:18px;cursor:pointer;color:#666;padding:6px;position:absolute;right:12px;top:10px}
+
+.site-notice.show{opacity:1;transform:none;pointer-events:auto}
+
+/* dim overlay that appears when site notice is shown */
+.site-dim{position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:2050;opacity:0;transition:opacity 200ms ease;pointer-events:none}
+.site-dim.show{opacity:1;pointer-events:auto}
+
+.test-button:hover {
+    filter: brightness(0.9);
+}
+
+.tl-buttons {
+    position: fixed;
+    top: 12px;
+    left: 12px;
+    display: flex;
+    gap: 8px;
+    z-index: 1000;
+}
+
+.top-left-btn {
+    background: var(--primary);
+    color: #fff;
+    border: none;
+    padding: 8px 12px;
+    border-radius: var(--btn-radius);
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.signup_in {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    /* use opacity/visibility/pointer-events so transitions animate */
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 180ms ease;
+}
+
+.signup_in--open {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.signup_in_backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(10, 14, 20, 0.5);
+    backdrop-filter: blur(2px);
+    opacity: 0;
+    transition: opacity 180ms ease;
+    z-index: 0;
+}
+
+.signup_in--open .signup_in_backdrop {
+    opacity: 1;
+}
+
+.signup_in_dialog {
+    position: relative;
+    width: 100%;
+    max-width: 520px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 12px 40px rgba(20,30,60,0.25);
+    margin: 16px;
+    transform: translateY(-8px) scale(0.99);
+    transition: transform 180ms ease, opacity 180ms ease;
+    opacity: 0;
+    z-index: 2;
+    overflow: hidden;
+}
+
+.signup_in--open .signup_in_dialog {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+}
+
+/* make dialog centered; prefer max-width and increase vertical space instead of width */
+.signup_in_dialog{
+    /* revert explicit width change — rely on max-width for horizontal sizing */
+    width: 100%;
+    max-width: 520px;
+    min-width: 320px;
+    /* increase height rather than width */
+    min-height: 420px;
+    max-height: calc(100vh - 64px);
+    overflow: auto; /* allow scrolling if content is larger than viewport */
+    padding: 12px;
+    box-sizing: border-box;
+}
+
+/* auth actions inside modal */
+.auth-actions{display:flex;flex-direction:column;gap:8px;align-items:stretch;margin-top:12px}
+.auth-actions button{width:100%;padding:12px 16px;font-size:16px;border-radius:var(--btn-radius)}
+.auth-actions .signup-action{background:var(--primary);color:#fff;border:none}
+.auth-actions .login-action{background:var(--primary);color:#fff;border:none}
+.auth-actions .auth-toggle{background:none;border:none;color:var(--primary);cursor:pointer;padding:0;text-decoration:underline;font-size:14px;align-self:center}
+
+@media (max-width:720px){
+    /* on small screens use full-width and natural height to avoid forcing large min-height */
+    .signup_in_dialog{width:calc(100% - 32px);height:auto;min-height:0;max-height:none}
+}
+
+.signup_in_header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 20px;
+    border-bottom: 1px solid #eee;
+}
+
+.signup_in_header h2 {
+    margin: 0;
+    font-size: 20px;
+    color: #2A2D41;
+}
+
+.signup_in_close {
+    background: transparent;
+    border: none;
+    font-size: 24px;
+    line-height: 1;
+    cursor: pointer;
+    color: #666;
+    padding: 4px 8px;
+}
+
+.signup_in_body {
+    padding: 18px 20px 24px 20px;
+    color: #333;
+}
+
+.signup_in_form .number-input {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+@media (max-width: 520px) {
+    .signup_in_dialog {
+        max-width: calc(100% - 32px);
+    }
+}
+
+.signup_in_dialog :focus {
+    outline: 2px solid rgba(43,45,65,0.12);
+    outline-offset: 2px;
+}

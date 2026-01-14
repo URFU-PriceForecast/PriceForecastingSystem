@@ -1,10 +1,7 @@
-﻿global using PriceForecasting.Data.Context;
+global using PriceForecasting.Data.Context;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
 using PriceForecasting.Core.Services;
 
 
@@ -31,27 +28,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 // Добавляем MemoryCache (для кеширования рекомендаций 6 часов)
 builder.Services.AddMemoryCache();
 
-// Настройка JWT
-var jwtKey = builder.Configuration["Jwt:Key"] ?? "SuperSecretKey123!@#";
-var jwtIssuer = builder.Configuration["Jwt:Issuer"] ?? "PRICER";
-var jwtAudience = builder.Configuration["Jwt:Audience"] ?? "PRICER-CLIENTS";
-
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options =>
-    {
-        options.TokenValidationParameters = new TokenValidationParameters
-        {
-            ValidateIssuer = true,
-            ValidateAudience = true,
-            ValidateLifetime = true,
-            ValidateIssuerSigningKey = true,
-            ValidIssuer = jwtIssuer,
-            ValidAudience = jwtAudience,
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey))
-        };
-    });
-
-builder.Services.AddAuthorization();
+// Авторизация полностью отключена для демо-режима
 
 // Регистрируем ML сервис
 builder.Services.AddHttpClient<IMlService, MlService>();
@@ -67,6 +44,9 @@ builder.Services.AddCors(options =>
                .AllowAnyHeader();
     });
 });
+
+// Добавляем поддержку статических файлов
+builder.Services.AddDirectoryBrowser();
 
 var app = builder.Build();
 
@@ -93,9 +73,11 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseDefaultFiles();
+app.UseStaticFiles();
 app.UseCors("AllowAll");
-app.UseAuthentication();
-app.UseAuthorization();
+// Полностью убрана авторизация для демо-режима
+// app.UseAuthorization();
 app.MapControllers();
 
 // Порт для локальной разработки

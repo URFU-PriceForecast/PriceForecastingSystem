@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Аналитика товара — PRICER Platform</title>
+  <link rel="stylesheet" href="css/details.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/luxon/build/global/luxon.min.js"></script>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="analytics-header">
+    <div class="header-content">
+      <button class="back-btn" onclick="window.location='index.html'">
+        <i class="fas fa-arrow-left"></i>
+        Назад
+      </button>
+
+      <div class="product-info">
+        <h1 id="product-title">Анализ товара</h1>
+        <div class="product-subtitle">
+          <span id="article-display">Артикул: Загрузка...</span>
+          <span class="separator">•</span>
+          <span id="current-price">Цена: Загрузка...</span>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <button class="btn-secondary" id="exportBtn">
+          <i class="fas fa-download"></i>
+          Экспорт
+        </button>
+        <button class="btn-primary" id="refreshBtn">
+          <i class="fas fa-sync-alt"></i>
+          Обновить
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Controls Bar -->
+  <div class="controls-bar">
+    <div class="control-group">
+      <label><i class="fas fa-chart-line"></i> Сценарий:</label>
+      <div class="scenario-selector">
+        <button class="scenario-btn active" data-scenario="positive">
+          <i class="fas fa-arrow-up"></i>
+          Позитивный
+        </button>
+        <button class="scenario-btn" data-scenario="negative">
+          <i class="fas fa-arrow-down"></i>
+          Пессимистичный
+        </button>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label><i class="fas fa-calendar"></i> Период:</label>
+      <div class="period-selector">
+        <button class="period-btn active" data-period="30">30 дней</button>
+        <button class="period-btn" data-period="90">90 дней</button>
+        <button class="period-btn" data-period="180">6 месяцев</button>
+        <button class="period-btn" data-period="365">1 год</button>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label><i class="fas fa-brain"></i> ML модель:</label>
+      <select id="modelSelector">
+        <option value="auto">Автовыбор</option>
+        <option value="linear">Linear</option>
+        <option value="arima">ARIMA</option>
+        <option value="exponential">Exponential</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <main class="analytics-main">
+
+    <!-- Key Metrics -->
+    <section class="metrics-section">
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <div class="metric-icon">
+            <i class="fas fa-coins"></i>
+          </div>
+          <div class="metric-content">
+            <h3 id="metric-price">--</h3>
+            <p>Текущая цена</p>
+          </div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-icon trend-up">
+            <i class="fas fa-arrow-up"></i>
+          </div>
+          <div class="metric-content">
+            <h3 id="metric-trend">+--%</h3>
+            <p>Тренд за период</p>
+          </div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-icon">
+            <i class="fas fa-chart-line"></i>
+          </div>
+          <div class="metric-content">
+            <h3 id="metric-volatility">--%</h3>
+            <p>Волатильность</p>
+          </div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-icon confidence">
+            <i class="fas fa-shield-alt"></i>
+          </div>
+          <div class="metric-content">
+            <h3 id="metric-confidence">--%</h3>
+            <p>Уверенность прогноза</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Charts Section -->
+    <section class="charts-section">
+      <div class="chart-container">
+        <div class="chart-header">
+          <h2><i class="fas fa-chart-area"></i> Прогноз цен</h2>
+          <div class="chart-controls">
+            <button class="chart-type-btn active" data-type="line">
+              <i class="fas fa-chart-line"></i>
+            </button>
+            <button class="chart-type-btn" data-type="area">
+              <i class="fas fa-chart-area"></i>
+            </button>
+          </div>
+        </div>
+        <div class="chart-wrapper">
+          <div id="chartSkeleton" class="skeleton"></div>
+          <canvas id="priceChart"></canvas>
+        </div>
+      </div>
+
+      <div class="chart-container">
+        <div class="chart-header">
+          <h2><i class="fas fa-project-diagram"></i> Сравнение моделей прогнозирования</h2>
+          <p class="chart-subtitle">Точность различных ML алгоритмов на тестовых данных</p>
+        </div>
+        <div class="chart-wrapper">
+          <canvas id="modelsChart" height="300"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <!-- Recommendations Section -->
+    <section class="recommendations-section">
+      <div class="recommendations-header">
+        <h2><i class="fas fa-lightbulb"></i> Рекомендации по ценообразованию</h2>
+      </div>
+
+      <div class="recommendations-grid">
+        <div class="recommendation-card main">
+          <div class="rec-icon">
+            <i class="fas fa-star"></i>
+          </div>
+          <div class="rec-content">
+            <h3>Основная рекомендация</h3>
+            <div id="main-recommendation" class="rec-text">
+              <div class="skeleton-text"></div>
+              <div class="skeleton-text short"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="recommendation-card">
+          <div class="rec-icon">
+            <i class="fas fa-clock"></i>
+          </div>
+          <div class="rec-content">
+            <h3>Временной горизонт</h3>
+            <p id="timeframe-rec">Анализ данных...</p>
+          </div>
+        </div>
+
+        <div class="recommendation-card">
+          <div class="rec-icon">
+            <i class="fas fa-chart-pie"></i>
+          </div>
+          <div class="rec-content">
+            <h3>Ожидаемый эффект</h3>
+            <p id="impact-rec">Расчет...</p>
+          </div>
+        </div>
+
+        <div class="recommendation-card">
+          <div class="rec-icon">
+            <i class="fas fa-exclamation-triangle"></i>
+          </div>
+          <div class="rec-content">
+            <h3>Риски</h3>
+            <p id="risks-rec">Оценка рисков...</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Analysis Details -->
+    <section class="analysis-section">
+      <div class="analysis-tabs">
+        <button class="tab-btn active" data-tab="overview">
+          <i class="fas fa-info-circle"></i>
+          Обзор
+        </button>
+        <button class="tab-btn" data-tab="technical">
+          <i class="fas fa-cogs"></i>
+          Технические детали
+        </button>
+        <button class="tab-btn" data-tab="comparison">
+          <i class="fas fa-balance-scale"></i>
+          Сравнение
+        </button>
+      </div>
+
+      <div class="tab-content">
+        <div class="tab-panel active" id="overview-tab">
+          <div class="analysis-grid">
+            <div class="analysis-card">
+              <h4><i class="fas fa-calendar"></i> Период анализа</h4>
+              <p id="analysis-period">-- дней исторических данных</p>
+            </div>
+            <div class="analysis-card">
+              <h4><i class="fas fa-robot"></i> ML модель</h4>
+              <p id="analysis-model">--</p>
+            </div>
+            <div class="analysis-card">
+              <h4><i class="fas fa-bullseye"></i> Точность прогноза</h4>
+              <p id="analysis-accuracy">--%</p>
+            </div>
+            <div class="analysis-card">
+              <h4><i class="fas fa-tachometer-alt"></i> Время расчета</h4>
+              <p id="analysis-time">< 1 сек</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-panel" id="technical-tab">
+          <div class="technical-details">
+            <h4>Технические характеристики прогноза</h4>
+            <div class="tech-metrics">
+              <div class="metric">
+                <span class="label">MAPE:</span>
+                <span class="value" id="tech-mape">--%</span>
+              </div>
+              <div class="metric">
+                <span class="label">RMSE:</span>
+                <span class="value" id="tech-rmse">--</span>
+              </div>
+              <div class="metric">
+                <span class="label">R²:</span>
+                <span class="value" id="tech-r2">--</span>
+              </div>
+              <div class="metric">
+                <span class="label">Direction Accuracy:</span>
+                <span class="value" id="tech-direction">--%</span>
+              </div>
+            </div>
+          </div>
+      </div>
+
+        <div class="tab-panel" id="comparison-tab">
+          <div class="comparison-content">
+            <h4>Сравнение ML моделей</h4>
+            <div class="models-comparison">
+              <div class="model-row">
+                <span class="model-name">Linear Regression</span>
+                <div class="model-bar">
+                  <div class="bar-fill" style="width: 87%"></div>
+                </div>
+                <span class="model-score">87.3%</span>
+              </div>
+              <div class="model-row">
+                <span class="model-name">ARIMA</span>
+                <div class="model-bar">
+                  <div class="bar-fill" style="width: 82%"></div>
+                </div>
+                <span class="model-score">82.1%</span>
+              </div>
+              <div class="model-row">
+                <span class="model-name">Exponential Smoothing</span>
+                <div class="bar-fill" style="width: 80%"></div>
+                <span class="model-score">79.8%</span>
+              </div>
+              <div class="model-row">
+                <span class="model-name">Moving Average</span>
+                <div class="model-bar">
+                  <div class="bar-fill" style="width: 75%"></div>
+                </div>
+                <span class="model-score">75.2%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Loading Overlay -->
+  <div class="loading-overlay" id="loadingOverlay">
+    <div class="loading-spinner">
+      <i class="fas fa-chart-line"></i>
+      <p>Анализ данных...</p>
+    </div>
+  </div>
+
+  <script src="js/details-analytics.js"></script>
+
+  <!-- Notifications Container -->
+  <div class="notifications"></div>
+</body>
+</html>
